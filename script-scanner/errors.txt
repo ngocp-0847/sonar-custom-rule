@@ -118,3 +118,11 @@ PlaintextOTPDetector: ./example-code-test/example.php:247
   Lưu trữ OTP dạng plaintext trong PHP
   Code: $stmt = $pdo->prepare("INSERT INTO otp_table (user_id, otp, expires_at) VALUES (?, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))");
 
+insecure-crypto-config: ./example-code-test/insecure-encrypt.py:7
+  Insecure block mode detected (likely ECB). ECB mode does not provide sufficient data confidentiality.
+  Code: # ❌ ECB mode KHÔNG AN TOÀN
+
+insecure-crypto-config: ./example-code-test/insecure-encrypt.py:8
+  Insecure block mode detected (likely ECB). ECB mode does not provide sufficient data confidentiality.
+  Code: cipher = AES.new(key, AES.MODE_ECB)
+

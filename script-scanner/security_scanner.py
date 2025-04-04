@@ -12,6 +12,7 @@ from detector_base import VulnerabilityDetector
 from mass_assign_detector import PHPMassAssignmentDetector
 from sensitive_data_cache_detector import SensitiveDataCacheDetector
 from plaintext_otp_detector import PlaintextOTPDetector
+from insecure_crypto_config_detector import InsecureCryptoConfigDetector
 
 def get_available_detectors():
     """Returns a dictionary of available detectors"""
@@ -27,6 +28,10 @@ def get_available_detectors():
         'plaintext-otp': {
             'class': PlaintextOTPDetector,
             'description': 'Detects plaintext OTP storage in code'
+        },
+        'insecure-crypto-config': {
+            'class': InsecureCryptoConfigDetector,
+            'description': 'Detects insecure configurations of IVs, cipher modes, and crypto settings'
         },
     }
 

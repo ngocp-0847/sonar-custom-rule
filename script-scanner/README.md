@@ -38,6 +38,7 @@ You can select specific detectors to run:
 | Mass Assignment | `--mass-assignment` | Detects mass assignment vulnerabilities in PHP code |
 | Sensitive Data Cache | `--sensitive-cache` | Detects sensitive data stored in cache |
 | Plaintext OTP | `--plaintext-otp` | Detects plaintext OTP storage in code |
+| Insecure Crypto Config | `--insecure-crypto-config` | Detects insecure configurations of IVs, cipher modes, and crypto settings |
 
 If no specific detectors are selected, all detectors will run by default.
 
@@ -50,7 +51,7 @@ python security_scanner.py --path /path/to/project --recursive
 
 Scan with specific detectors only:
 ```bash
-python security_scanner.py --path /path/to/project --mass-assignment --plaintext-otp
+python security_scanner.py --path /path/to/project --mass-assignment --insecure-crypto-config
 ```
 
 Exclude certain directories and save results to a file:
@@ -77,7 +78,7 @@ mass-assignment: /path/to/file.php:25
   Mass assignment vulnerability detected in model definition
   Code: $model->update($request->all());
 
-plaintext-otp: /path/to/auth.php:42
-  OTP code stored in plaintext
-  Code: $user->otp = $generated_code;
+insecure-crypto-config: /path/to/crypto.java:42
+  Insecure block mode detected (likely ECB)
+  Code: Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
 ```
