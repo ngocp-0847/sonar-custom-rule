@@ -1,5 +1,13 @@
 # Lỗi: Không Phân Loại và Lưu Trữ Thông Tin Cá Nhân Nhạy Cảm Đúng Cách
 
+## Reference checklists.
+> 8.3.8 Verify that sensitive personal information is subject to data retention
+classification, such that old or out of date data is deleted automatically, on a
+schedule, or as the situation requires. ✓ ✓ 285
+
+- CWE-285: Improper Authorization
+https://cwe.mitre.org/data/definitions/285.html
+
 ## Mô tả
 Lỗi này xảy ra khi hệ thống không có cơ chế phân loại dữ liệu và chính sách lưu trữ thông tin cá nhân nhạy cảm phù hợp. Việc lưu trữ dữ liệu nhạy cảm vô thời hạn tạo ra rủi ro bảo mật lớn, vi phạm các quy định về bảo vệ dữ liệu (như GDPR, CCPA) và làm tăng mức độ nghiêm trọng khi xảy ra sự cố rò rỉ dữ liệu. Thông tin cá nhân nhạy cảm (PII - Personally Identifiable Information) cần được phân loại, lưu trữ có thời hạn và xóa bỏ khi hết hạn sử dụng.
 

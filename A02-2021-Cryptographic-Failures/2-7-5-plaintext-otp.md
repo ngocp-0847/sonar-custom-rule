@@ -1,6 +1,11 @@
 # Lỗi: Lưu OTP Dưới Dạng Văn Bản Rõ (Plaintext)
 
 ## Mô tả
+
+Ref:
+- CWE-256: Plaintext Storage of a Password
+https://cwe.mitre.org/data/definitions/256.html
+
 One Time Password (OTP) là một mã xác thực sử dụng một lần được gửi tới người dùng qua SMS, email hoặc ứng dụng xác thực. Khi OTP được lưu trữ dưới dạng văn bản rõ (plaintext) trong cơ sở dữ liệu hoặc log, có nguy cơ cao bị đánh cắp và sử dụng trái phép.
 
 ## Ví dụ Lỗi

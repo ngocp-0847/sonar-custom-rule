@@ -13,6 +13,7 @@ from mass_assign_detector import PHPMassAssignmentDetector
 from sensitive_data_cache_detector import SensitiveDataCacheDetector
 from plaintext_otp_detector import PlaintextOTPDetector
 from insecure_crypto_config_detector import InsecureCryptoConfigDetector
+from improper_data_retention_detector import ImproperDataRetentionDetector
 
 def get_available_detectors():
     """Returns a dictionary of available detectors"""
@@ -32,6 +33,10 @@ def get_available_detectors():
         'insecure-crypto-config': {
             'class': InsecureCryptoConfigDetector,
             'description': 'Detects insecure configurations of IVs, cipher modes, and crypto settings'
+        },
+        'improper-data-retention': {
+            'class': ImproperDataRetentionDetector,
+            'description': 'Detects improper classification and retention of sensitive personal information'
         },
     }
 

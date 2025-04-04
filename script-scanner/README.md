@@ -39,6 +39,7 @@ You can select specific detectors to run:
 | Sensitive Data Cache | `--sensitive-cache` | Detects sensitive data stored in cache |
 | Plaintext OTP | `--plaintext-otp` | Detects plaintext OTP storage in code |
 | Insecure Crypto Config | `--insecure-crypto-config` | Detects insecure configurations of IVs, cipher modes, and crypto settings |
+| Improper Data Retention | `--improper-data-retention` | Detects improper classification and retention of sensitive personal information |
 
 If no specific detectors are selected, all detectors will run by default.
 
