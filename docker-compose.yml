@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    environment:
+      - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/api/system/status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sonar-scanner:
+    image: sonarsource/sonar-scanner-cli
+    container_name: sonar-scanner
+    user: root
+    env_file:
+      - .env
+    environment:
+      - SONAR_HOST_URL=http://sonarqube:9000
+      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=ee-working -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_007c72c1b10c1a33672d7e9fc08d8d3776900d55 -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true -Dsonar.java.binaries=.
+    volumes:
+      - ./:/usr/src:rw
+    command: >
+      bash -c '
+        echo "Waiting for SonarQube to be ready..."
+        while ! curl -s -f -u admin:admin http://sonarqube:9000/api/system/status > /dev/null 2>&1; do
+          echo "SonarQube not ready yet, waiting..."
+          sleep 10
+        done
+        echo "SonarQube is ready, running scanner..."
+        mkdir -p /tmp/.sonar
+        sonar-scanner -Dsonar.working.directory=/tmp/.sonar
+      '
+    # depends_on:
+    #   sonarqube:
+    #     condition: service_healthy
+

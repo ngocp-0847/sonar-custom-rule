@@ -1,0 +1,32 @@
+# Bỏ qua thư mục kết quả của SonarQube
+.scannerwork/
+
+# Bỏ qua các thư mục và file của SonarScanner
+sonar-scanner-*/
+sonar-scanner-*.zip
+
+# Bỏ qua node_modules và các file liên quan trong các dự án TypeScript/JavaScript
+node_modules/
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+package-lock.json
+.npm
+
+# Bỏ qua các file và thư mục được tạo bởi IDE và hệ thống
+.idea/
+.vscode/
+.DS_Store
+*.swp
+*.swo
+*~
+
+# Bỏ qua file biến môi trường chứa thông tin nhạy cảm
+.env
+
+# Bỏ qua file log
+*.log
+
+# Bỏ qua file tạm thời
+tmp/
+temp/ 
