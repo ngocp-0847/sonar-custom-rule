@@ -1,5 +1,17 @@
 # 9.1.3 Đảm bảo sử dụng phiên bản TLS mới nhất
 
+## Rule sonarsource.
+
+- csharpsquid:S4830
+- javascript:S4830
+- java:S4830
+- php:S4830
+- python:S4830
+- kotlin:S4830    
+
+- typescript:S5527 (Server hostnames should be verified during SSL/TLS connections)
+
+
 ## Reference checklist
 https://docs.google.com/spreadsheets/d/1b6Xx4iUXT3SousU0vb1FQdfwoB8MDPezxPm3TMEAKD4/edit?gid=1836627612#gid=1836627612&range=C44:D44
 
