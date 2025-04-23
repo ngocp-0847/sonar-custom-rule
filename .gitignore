@@ -30,3 +30,4 @@ package-lock.json
 # Bỏ qua file tạm thời
 tmp/
 temp/ 
+sample-project-test

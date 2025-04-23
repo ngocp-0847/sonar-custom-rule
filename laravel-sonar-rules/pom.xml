@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.mycompany.sonar</groupId>
+  <artifactId>laravel-custom-rules</artifactId>
+  <version>1.0</version>
+  <packaging>sonar-plugin</packaging>
+
+  <name>Laravel Custom Rules</name>
+  <description>Custom SonarQube rules for Laravel applications</description>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <sonar.api.version>9.4.0.54424</sonar.api.version>
+    <sonar.php.version>3.45.0.12991</sonar.php.version>
+    <java.version>11</java.version>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+  </properties>
+
+  <dependencies>
+    <!-- SonarQube Plugin API -->
+    <dependency>
+      <groupId>org.sonarsource.sonarqube</groupId>
+      <artifactId>sonar-plugin-api</artifactId>
+      <version>${sonar.api.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- PHP Analyzer API -->
+    <dependency>
+      <groupId>org.sonarsource.php</groupId>
+      <artifactId>sonar-php-plugin</artifactId>
+      <version>${sonar.php.version}</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.13.2</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+        <artifactId>sonar-packaging-maven-plugin</artifactId>
+        <version>1.23.0.740</version>
+        <extensions>true</extensions>
+        <configuration>
+          <pluginClass>com.mycompany.sonar.LaravelCustomRulesPlugin</pluginClass>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

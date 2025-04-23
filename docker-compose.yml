@@ -13,6 +13,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - sonar-network
 
   sonar-scanner:
     image: sonarsource/sonar-scanner-cli
@@ -22,9 +24,9 @@ services:
       - .env
     environment:
       - SONAR_HOST_URL=http://sonarqube:9000
-      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=ee-working -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_007c72c1b10c1a33672d7e9fc08d8d3776900d55 -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true -Dsonar.java.binaries=.
+      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_591fcf25cfae8d741bb406a5332d6fb4829df73b -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true
     volumes:
-      - ./:/usr/src:rw
+      - ./laravel-sonar-rules/laravel-massige-app:/usr/src:rw
     command: >
       bash -c '
         echo "Waiting for SonarQube to be ready..."
@@ -36,7 +38,15 @@ services:
         mkdir -p /tmp/.sonar
         sonar-scanner -Dsonar.working.directory=/tmp/.sonar
       '
-    # depends_on:
-    #   sonarqube:
-    #     condition: service_healthy
+    networks:
+      - sonar-network
+    depends_on:
+      - sonarqube
 
+
+networks:
+  sonar-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "192.168.1.0/24"

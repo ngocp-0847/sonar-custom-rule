@@ -8,15 +8,6 @@ Dự án này được tạo ra để kiểm tra và nghiên cứu các tính n�
 - Thử nghiệm cấu hình SonarQube với các ngôn ngữ lập trình khác nhau (TypeScript)
 - Hiểu rõ cách SonarQube phân tích và báo cáo các vấn đề bảo mật
 
-## Cấu Trúc Dự Án
-
-- `typescript-super-error/`: Mẫu mã TypeScript để kiểm tra
-- `errors/`: Các mẫu mã và tài liệu về lỗi bảo mật phổ biến
-  - `pbkdf2.md`: Mẫu về thuật toán mã hóa mật khẩu
-  - `slow-hash-algorithm.md`: Ví dụ về thuật toán băm chậm
-  - `log-protection.md`: Bảo vệ thông tin nhạy cảm trong log
-  - `broken.md`: Các mẫu mã bị lỗi
-
 ## Hướng Dẫn Sử Dụng
 
 ### Chạy SonarQube bằng Docker
@@ -48,4 +39,9 @@ docker-compose up sonar-scanner
 ## Kết Quả
 
 Sau khi phân tích hoàn tất, bạn có thể xem kết quả và các vấn đề phát hiện được trong giao diện web của SonarQube.
+
+
+curl -u sqp_007c72c1b10c1a33672d7e9fc08d8d3776900d55: \
+  "http://localhost:9000/api/issues/search?componentKeys=app_test&types=BUG,VULNERABILITY,CODE_SMELL&p=1&ps=500" \
+  -o result.json
 
