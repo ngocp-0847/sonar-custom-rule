@@ -10,6 +10,6 @@ export PATH=$PATH:$(pwd)/sonar-scanner-4.8.0.2856-linux/bin
 
 sonar-scanner \
   -Dsonar.projectKey=app_test \
-  -Dsonar.sources=./typescript-super-error \
+  -Dsonar.sources=./laravel-massige-app \
   -Dsonar.host.url=http://localhost:9000 \
   -Dsonar.login=sqp_007c72c1b10c1a33672d7e9fc08d8d3776900d55
