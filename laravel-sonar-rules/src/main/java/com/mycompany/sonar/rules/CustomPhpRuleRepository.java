@@ -20,7 +20,8 @@ public class CustomPhpRuleRepository implements PHPCustomRuleRepository {
   public List<Class<?>> checkClasses() {
     return Arrays.asList(
       LaravelMassAssignmentCheck.class,
-      LaravelPlaintextOTPCheck.class
+      LaravelPlaintextOTPCheck.class,
+      UnsafeSVGContentCheck.class
     );
   }
 }
