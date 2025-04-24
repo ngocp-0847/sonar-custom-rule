@@ -24,7 +24,8 @@ public class LaravelCustomRulesDefinition implements RulesDefinition {
         RulesDefinitionAnnotationLoader rulesLoader = new RulesDefinitionAnnotationLoader();
         rulesLoader.load(repository, 
                 LaravelMassAssignmentCheck.class,
-                LaravelPlaintextOTPCheck.class);
+                LaravelPlaintextOTPCheck.class,
+                UnsafeSVGContentCheck.class);
         
         // Add HTML descriptions for each rule - this is required by SonarQube
         setRuleDescriptions(repository);
@@ -90,6 +91,49 @@ public class LaravelCustomRulesDefinition implements RulesDefinition {
                 "    'otp_hash' => Hash::make($otp . $userId),  // Hashed with salt\n" +
                 "    'created_at' => now()\n" +
                 "]);</pre>"
+            );
+            
+        // Set description for UnsafeSVGContent rule
+        repository.rule("UnsafeSVGContent")
+            .setHtmlDescription(
+                "<p>This rule detects unsanitized SVG content that could lead to XSS vulnerabilities.</p>" +
+                "<h2>Vulnerability</h2>" +
+                "<p>SVG files can contain executable JavaScript code through &lt;script&gt; tags, event handlers, and " +
+                "&lt;foreignObject&gt; elements. When user-supplied SVG content is rendered without proper sanitization, " +
+                "it can lead to Cross-Site Scripting (XSS) attacks.</p>" +
+                "<h2>Risk</h2>" +
+                "<p>Attackers can embed malicious JavaScript within SVG files that executes in the context of your application, " +
+                "potentially stealing session cookies, personal data, or performing actions on behalf of the user.</p>" +
+                "<h2>Example of non-compliant code</h2>" +
+                "<pre>" +
+                "// Laravel Blade template\n" +
+                "{!! $userSuppliedSvg !!}\n\n" +
+                "// React component\n" +
+                "function IconDisplay({ svgContent }) {\n" +
+                "  return &lt;div dangerouslySetInnerHTML={{ __html: svgContent }} /&gt;;\n" +
+                "}\n\n" +
+                "// Direct DOM manipulation\n" +
+                "element.innerHTML = userUploadedSvgContent;</pre>" +
+                "<h2>Example of compliant code</h2>" +
+                "<pre>" +
+                "// Laravel - use a sanitizer library\n" +
+                "use enshrined\\svgSanitize\\Sanitizer;\n\n" +
+                "$sanitizer = new Sanitizer();\n" +
+                "$cleanSvg = $sanitizer->sanitize($userSuppliedSvg);\n" +
+                "{!! $cleanSvg !!}\n\n" +
+                "// React - use DOMPurify\n" +
+                "import DOMPurify from 'dompurify';\n\n" +
+                "function IconDisplay({ svgContent }) {\n" +
+                "  const sanitizedSvg = DOMPurify.sanitize(svgContent, { USE_PROFILES: { svg: true } });\n" +
+                "  return &lt;div dangerouslySetInnerHTML={{ __html: sanitizedSvg }} /&gt;;\n" +
+                "}</pre>" +
+                "<h2>References</h2>" +
+                "<ul>" +
+                "  <li>OWASP ASVS v4.0.3: Requirement 5.2.7</li>" +
+                "  <li><a href='https://owasp.org/www-community/attacks/xss/'>OWASP XSS Prevention</a></li>" +
+                "  <li><a href='https://github.com/cure53/DOMPurify'>DOMPurify</a></li>" +
+                "  <li><a href='https://github.com/darylldoyle/svg-sanitizer'>SVG Sanitizer for PHP</a></li>" +
+                "</ul>"
             );
     }
 }
