@@ -32,27 +32,27 @@ Sau khi khởi động, truy cập SonarQube tại địa chỉ: http://localhos
 
 ### Chạy phân tích mã nguồn
 
-Hoặc sử dụng Docker Compose để chạy trình quét:
+Sử dụng Docker Compose để chạy trình quét (Recommend):
 
 ```bash
 docker-compose up sonar-scanner
 ```
 
-Hoặc chạy local:
+Hoặc chạy local (nếu tải file bin về máy host):
 
 ```
 ./sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.exclusions="**/*.java" -Dsonar.login=sqp_fb748608d1a3f67ad5cbc2efbaec15dd9df5f3ec -Dsonar.projectBaseDir=/Users/ngocp/Documents/projects/sonar-check/spring-app -Dsonar.scm.disabled=true
 ```
 
-Or run have property file:
+Or run if have property file:
 
 ```bash
 ./sonar-scanner/bin/sonar-scanner -X
 ```
 
 # Cách tạo thêm custom rule.
-- Tạo một file Java mới trong thư mục `src/main/java/com/sonarsource/customrules` với tên `CustomRule.java`.
-- Trong file này, bạn sẽ định nghĩa các quy tắc tùy chỉnh của mình bằng cách mở rộng các lớp và giao diện có sẵn trong SonarQube API.
+- Tạo một file Java mới trong thư mục `src/main/java/com/mycompany/rules` với tên `CustomRule.java`.
+- Trong file này, bạn sẽ định nghĩa các quy tắc tùy chỉnh của mình bằng cách mở rộng các lớp và giao diện có sẵn trong SonarQube API (Có hỗ trợ nhiều lớp ngôn ngữ như PHP và Java)
 - Ví dụ, bạn có thể tạo một quy tắc kiểm tra xem một biến có được khởi tạo hay không.
 
 ```java
@@ -83,15 +83,14 @@ public class CustomRule extends IssuableSubscriptionVisitor {
 
 - Sau khi đã tạo xong custom rule, bạn cần biên dịch lại plugin và khởi động lại SonarQube để áp dụng các thay đổi.
 
-Chay script sau để rebuild lại plugin và active trên server sonarqube
+- Chạy script sau để build plugin, đưa vào folder plugin của sonarqube server, restart server để nhận diện plugin mới.
 
 ```bash
 ./rebuild.sh
 ```
 
 - Vào page sau để active rule http://localhost:9000/coding_rules?selected=css%3AS4655
-- Chọn rule bạn đã tạo và nhấn vào nút "Activate" để kích hoạt nó.
-- Sau khi kích hoạt rule, bạn cần phải cấu hình lại Quality Profile để áp dụng cho project.
+- Bạn cần cấu hình lại Quality Profile (extend Sonar default) và active thêm rule custom của mình.
 
 
 ## Kết Quả
