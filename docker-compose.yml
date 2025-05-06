@@ -8,11 +8,6 @@ services:
       - "9000:9000"
     environment:
       - SONAR_ES_BOOTSTRAP_CHECKS_DISABLE=true
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:9000/api/system/status"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
     networks:
       - sonar-network
 
@@ -22,22 +17,12 @@ services:
     user: root
     env_file:
       - .env
+    platform: linux/amd64
     environment:
       - SONAR_HOST_URL=http://sonarqube:9000
-      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_591fcf25cfae8d741bb406a5332d6fb4829df73b -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true
+      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_09c3e65fe0a42cd69b0c3e59c73936a5ac38f0ca -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true
     volumes:
       - ./laravel-sonar-rules/laravel-massige-app:/usr/src:rw
-    command: >
-      bash -c '
-        echo "Waiting for SonarQube to be ready..."
-        while ! curl -s -f -u admin:admin http://sonarqube:9000/api/system/status > /dev/null 2>&1; do
-          echo "SonarQube not ready yet, waiting..."
-          sleep 10
-        done
-        echo "SonarQube is ready, running scanner..."
-        mkdir -p /tmp/.sonar
-        sonar-scanner -Dsonar.working.directory=/tmp/.sonar
-      '
     networks:
       - sonar-network
     depends_on:

@@ -1,0 +1,7 @@
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/controller/WebController.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/repository/UserRepository.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/model/User.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/service/PasswordResetService.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/controller/PasswordResetController.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/service/EmailService.java
+/Users/ngocp/Documents/projects/sonar-check/spring-app/src/main/java/com/example/demo/DemoApplication.java

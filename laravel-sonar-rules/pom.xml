@@ -7,8 +7,8 @@
   <version>1.0</version>
   <packaging>sonar-plugin</packaging>
 
-  <name>Laravel Custom Rules</name>
-  <description>Custom SonarQube rules for Laravel applications</description>
+  <name>Custom Rules</name>
+  <description>Custom SonarQube rules for applications</description>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -33,6 +33,14 @@
       <groupId>org.sonarsource.php</groupId>
       <artifactId>sonar-php-plugin</artifactId>
       <version>${sonar.php.version}</version>
+      <scope>provided</scope>
+    </dependency>
+
+    
+    <dependency>
+      <groupId>org.sonarsource.java</groupId>
+      <artifactId>sonar-java-plugin</artifactId>
+      <version>8.12.0.38599</version>
       <scope>provided</scope>
     </dependency>
     

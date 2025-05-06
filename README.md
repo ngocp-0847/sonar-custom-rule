@@ -29,6 +29,18 @@ Hoặc sử dụng Docker Compose để chạy trình quét:
 docker-compose up sonar-scanner
 ```
 
+Hoặc chạy local:
+
+```
+./sonar-scanner/bin/sonar-scanner -Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.exclusions="**/*.java" -Dsonar.login=sqp_fb748608d1a3f67ad5cbc2efbaec15dd9df5f3ec -Dsonar.projectBaseDir=/Users/ngocp/Documents/projects/sonar-check/spring-app -Dsonar.scm.disabled=true
+```
+
+Or run have property file:
+
+```bash
+./sonar-scanner/bin/sonar-scanner -X
+```
+
 # Cách tạo thêm custom rule.
 - Tạo một file Java mới trong thư mục `src/main/java/com/sonarsource/customrules` với tên `CustomRule.java`.
 - Trong file này, bạn sẽ định nghĩa các quy tắc tùy chỉnh của mình bằng cách mở rộng các lớp và giao diện có sẵn trong SonarQube API.
