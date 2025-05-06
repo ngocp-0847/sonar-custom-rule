@@ -31,3 +31,7 @@ package-lock.json
 tmp/
 temp/ 
 sample-project-test
+
+sonarqube_data/
+sonarqube_extensions/
+sonarqube_logs/

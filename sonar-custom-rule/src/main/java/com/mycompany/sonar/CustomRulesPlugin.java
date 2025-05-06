@@ -9,7 +9,7 @@ import com.mycompany.sonar.rules.SpringBootCustomRulesDefinition;
 /**
  * Entry point of plugin
  */
-public class LaravelCustomRulesPlugin implements Plugin {
+public class CustomRulesPlugin implements Plugin {
 
   @Override
   public void define(Context context) {

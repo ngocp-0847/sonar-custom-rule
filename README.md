@@ -12,6 +12,15 @@ Cách tạo custom rules cho SonarQube để tạo thêm lỗi check mã nguồn
 
 ## Hướng Dẫn Sử Dụng
 
+### Cài đặt Java JDK.
+
+https://bluevps.com/blog/how-to-install-java-on-ubuntu
+
+```bash
+sudo apt install openjdk-17-jdk
+sudo apt install openjdk-17-jre
+```
+
 ### Chạy SonarQube bằng Docker
 
 ```bash
