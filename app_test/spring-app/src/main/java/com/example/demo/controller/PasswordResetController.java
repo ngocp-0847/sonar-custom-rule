@@ -6,10 +6,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.service.PasswordResetService;
-
-import main.java.com.example.demo.model.User;
+import com.example.demo.service.EmailService;
+import com.example.demo.service.SmsService;
+import com.example.demo.service.TOTPService;
+import com.example.demo.service.UserService;
+import com.example.demo.model.User;
 
 import java.util.Map;
 import java.util.UUID;
@@ -20,6 +24,18 @@ public class PasswordResetController {
 
     @Autowired
     private PasswordResetService passwordResetService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private TOTPService totpService;
+    
+    @Autowired
+    private EmailService emailService;
+    
+    @Autowired
+    private SmsService smsService;
     
     @PostMapping("/forgot-password")
     public String forgotPassword(@RequestParam("email") String email) {
