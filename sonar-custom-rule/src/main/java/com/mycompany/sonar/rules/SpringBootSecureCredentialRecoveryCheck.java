@@ -83,10 +83,6 @@ public class SpringBootSecureCredentialRecoveryCheck extends BaseTreeVisitor imp
     // Check if this method is related to password recovery
     String methodName = tree.simpleName().name().toLowerCase();
     System.out.println("visitMethod: " + methodName);
-    // if (methodName.equals(methodName) "forgotPassword") {
-    //   reportIssue(tree, "This password reset method appears to only send an email with reset link without additional verification. " +
-    //                  "OWASP ASVS v2.5.6 requires secure recovery mechanisms like TOTP, soft tokens, mobile push, or offline verification.");
-    // }
     if (isPasswordRecoveryMethod(methodName)) {
       checkSecurePasswordRecoveryMethod(tree);
     }

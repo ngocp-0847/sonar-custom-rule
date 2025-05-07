@@ -4,9 +4,9 @@
 set -e
 
 # Define variables
-PROJECT_DIR="laravel-sonar-rules"
-JAR_FILE="laravel-custom-rules-1.0.jar"
-SONARQUBE_CONTAINER="a5a119b99bff"
+PROJECT_DIR="sonar-custom-rule"
+JAR_FILE="sonar-custom-rules-1.0.jar"
+SONARQUBE_CONTAINER="65302458dc06"
 SONARQUBE_PLUGIN_PATH="/opt/sonarqube/extensions/plugins/"
 
 # Build the project
@@ -21,11 +21,15 @@ docker cp "$PROJECT_DIR/target/$JAR_FILE" "$SONARQUBE_CONTAINER:$SONARQUBE_PLUGI
 
 # Restart SonarQube
 echo "Restarting SonarQube..."
-docker-compose restart sonarqube
+docker compose restart sonarqube
+
+# Wait for SonarQube to fully restart
+echo "Waiting for SonarQube to restart..."
+sleep 20s
 
 # Run SonarScanner
 echo "Running SonarScanner..."
-docker-compose up sonar-scanner
+docker compose up sonar-scanner
 
 # Notify user to check analysis results
 echo "Analysis completed. Check for SVG security issues in the SonarQube dashboard."

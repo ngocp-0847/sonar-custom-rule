@@ -17,6 +17,8 @@ import org.sonar.plugins.php.api.tree.expression.IdentifierTree;
 import org.sonar.plugins.php.api.tree.expression.AssignmentExpressionTree;
 import org.sonar.plugins.php.api.tree.statement.ExpressionStatementTree;
 import org.sonar.plugins.php.api.visitors.PHPSubscriptionCheck;
+import org.sonar.plugins.php.api.visitors.PHPVisitorCheck;
+import org.sonar.plugins.php.api.visitors.CheckContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,8 +61,9 @@ public class LaravelPlaintextOTPCheck extends PHPSubscriptionCheck {
   public List<Kind> nodesToVisit() {
     return Arrays.asList(
         Kind.FUNCTION_CALL,            // For DB operations and logging functions
+        Kind.ASSIGNMENT_BY_REFERENCE,  // For references
         Kind.ASSIGNMENT,               // For session storage like $_SESSION['otp'] = $otp
-        Kind.ARRAY_INITIALIZER_FUNCTION // For array initializers in create() methods
+        Kind.ARRAY_INITIALIZER_BRACKET // For array initializers in create() methods
     );
   }
 
@@ -71,9 +74,10 @@ public class LaravelPlaintextOTPCheck extends PHPSubscriptionCheck {
         checkFunctionCall((FunctionCallTree) tree);
         break;
       case ASSIGNMENT:
+      case ASSIGNMENT_BY_REFERENCE:
         checkAssignment((AssignmentExpressionTree) tree);
         break;
-      case ARRAY_INITIALIZER_FUNCTION:
+      case ARRAY_INITIALIZER_BRACKET:
         checkArrayInitializer((ArrayInitializerTree) tree);
         break;
       default:
@@ -186,7 +190,7 @@ public class LaravelPlaintextOTPCheck extends PHPSubscriptionCheck {
     // For create/insert methods, the first argument is usually an array with column => value pairs
     ExpressionTree firstArg = functionCall.arguments().get(0);
     
-    if (firstArg.is(Kind.ARRAY_INITIALIZER_FUNCTION) || firstArg.is(Kind.ARRAY_INITIALIZER_BRACKET)) {
+    if (firstArg.is(Kind.ARRAY_INITIALIZER_BRACKET)) {
       ArrayInitializerTree arrayInit = (ArrayInitializerTree) firstArg;
       
       for (ArrayPairTree pair : arrayInit.arrayPairs()) {

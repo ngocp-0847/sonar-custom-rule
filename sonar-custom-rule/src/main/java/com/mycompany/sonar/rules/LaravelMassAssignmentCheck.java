@@ -7,7 +7,6 @@ import org.sonar.plugins.php.api.tree.Tree;
 import org.sonar.plugins.php.api.tree.Tree.Kind;
 import org.sonar.plugins.php.api.tree.expression.FunctionCallTree;
 import org.sonar.plugins.php.api.tree.expression.MemberAccessTree;
-import org.sonar.plugins.php.api.tree.expression.VariableIdentifierTree;
 import org.sonar.plugins.php.api.tree.expression.ExpressionTree;
 import org.sonar.plugins.php.api.tree.expression.LiteralTree;
 import org.sonar.plugins.php.api.tree.declaration.ClassDeclarationTree;
@@ -15,7 +14,7 @@ import org.sonar.plugins.php.api.tree.declaration.ClassPropertyDeclarationTree;
 import org.sonar.plugins.php.api.tree.expression.IdentifierTree;
 import org.sonar.plugins.php.api.symbols.Symbol;
 import org.sonar.plugins.php.api.visitors.PHPSubscriptionCheck;
-import org.sonar.php.tree.symbols.SymbolTableImpl;
+import org.sonar.plugins.php.api.visitors.CheckContext;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -47,47 +46,46 @@ public class LaravelMassAssignmentCheck extends PHPSubscriptionCheck {
   @Override
   public void visitNode(Tree tree) {
     FunctionCallTree functionCall = (FunctionCallTree) tree;
-    // Kiểm tra xem đây có phải là lời gọi hàm không
+    // Check if it's a function call
     if (!functionCall.callee().is(Kind.OBJECT_MEMBER_ACCESS) &&
         !functionCall.callee().is(Kind.CLASS_MEMBER_ACCESS)) {
       return;
     }
 
-    // Sửa: Thêm log để kiểm tra loại của cây
-    LOGGER.info("Function call detected at line {}: {}", functionCall);
+    // Add log to check tree type
+    LOGGER.info("Function call detected: {}", functionCall);
 
-    
-    // Kiểm tra xem đây có phải là lời gọi Model::create(), $model->fill() hoặc $model->update() không
+    // Check if this is a Model::create(), $model->fill() or $model->update() call
     if (functionCall.callee().is(Kind.OBJECT_MEMBER_ACCESS) || 
         functionCall.callee().is(Kind.CLASS_MEMBER_ACCESS)) {
       
       MemberAccessTree memberAccess = (MemberAccessTree) functionCall.callee();
-      // Sửa: Lấy tên phương thức từ member access
+      // Fix: Get method name from member access
       String methodName = ((IdentifierTree)memberAccess.member()).text();
       LOGGER.info("Method name: {}", methodName);
       
-      // Kiểm tra xem phương thức có nằm trong danh sách các phương thức không an toàn hay không
+      // Check if the method is in the list of unsafe methods
       if (UNSAFE_METHODS.contains(methodName)) {
-        LOGGER.info("Found unsafe method: {} at line {}", methodName);
+        LOGGER.info("Found unsafe method: {}", methodName);
         
-        // Kiểm tra xem tham số đầu tiên của phương thức là gì
+        // Check what the first parameter of the method is
         if (!functionCall.arguments().isEmpty()) {
           ExpressionTree firstArgument = functionCall.arguments().get(0);
           LOGGER.info("First argument type: {}", firstArgument.getClass().getSimpleName());
           
-          // Kiểm tra xem tham số đầu tiên có phải là $request->all() hoặc $request->input() không
+          // Check if the first parameter is $request->all() or $request->input()
           if (firstArgument.is(Kind.FUNCTION_CALL)) {
             FunctionCallTree argFunctionCall = (FunctionCallTree) firstArgument;
             LOGGER.info("First argument is a function call: {}", argFunctionCall.toString().replaceAll("\\s+", " ").trim());
             
             if (argFunctionCall.callee().is(Kind.OBJECT_MEMBER_ACCESS)) {
               MemberAccessTree argMemberAccess = (MemberAccessTree) argFunctionCall.callee();
-              // Sửa: Lấy tên phương thức từ member access
+              // Fix: Get method name from member access
               String argMethodName = ((IdentifierTree)argMemberAccess.member()).text();
               LOGGER.info("Argument method name: {}", argMethodName);
               
               if (UNSAFE_REQUEST_METHODS.contains(argMethodName)) {
-                // Đây là lỗ hổng mass assignment
+                // This is a mass assignment vulnerability
                 context().newIssue(this, tree, 
                   "Unsafe mass assignment detected: Using " + methodName + "() with " + 
                   argMethodName + "() can lead to mass assignment vulnerabilities. " + 
@@ -96,15 +94,13 @@ public class LaravelMassAssignmentCheck extends PHPSubscriptionCheck {
             }
           }
           
-          // Kiểm tra cho trường hợp $request->all()
+          // Check for $request->all() case
           if (firstArgument.is(Kind.VARIABLE_IDENTIFIER)) {
-            // Phát hiện các biến trực tiếp như $request hay $input
-            VariableIdentifierTree varIdentifier = (VariableIdentifierTree) firstArgument;
-            String varName = varIdentifier.text();
+            // Detect direct variables like $request or $input
+            String varName = firstArgument.toString();
             LOGGER.info("First argument is a variable: {}", varName);
             
             if (varName.contains("request") || varName.contains("input")) {
-
               context().newIssue(this, tree,
                 "Potential unsafe mass assignment detected: Using " + methodName + "() with " + 
                 varName + " can lead to mass assignment vulnerabilities. " +
@@ -112,7 +108,7 @@ public class LaravelMassAssignmentCheck extends PHPSubscriptionCheck {
             }
           }
         } else {
-          LOGGER.info("No arguments found for unsafe method call at line {}");
+          LOGGER.info("No arguments found for unsafe method call");
         }
       }
     }
