@@ -207,7 +207,6 @@ public class SpringBootSecureCredentialRecoveryCheck extends BaseTreeVisitor imp
   private boolean containsSecureMechanism(Tree tree) {
     // Simple string-based search for secure mechanisms
     String treeString = tree.toString().toLowerCase();
-    System.out.println("containsSecureMechanism:Checking tree: " + treeString);
     // Check for TOTP or other secure implementations
     if (SECURE_MECHANISM_PATTERN.matcher(treeString).find()) {
       return true;

@@ -20,6 +20,8 @@ public class User {
     private String securityQuestion;
     private String securityAnswer;
     private String resetToken;
+    private String secretKey;
+    private String phone;
     
     // Getters and Setters
     public Long getId() {
@@ -76,5 +78,21 @@ public class User {
     
     public void setResetToken(String resetToken) {
         this.resetToken = resetToken;
+    }
+    
+    public String getSecretKey() {
+        return secretKey;
+    }
+    
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
+    
+    public String getPhone() {
+        return phone;
+    }
+    
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
