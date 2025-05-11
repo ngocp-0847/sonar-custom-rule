@@ -16,20 +16,15 @@ services:
   sonar-scanner:
     image: sonarsource/sonar-scanner-cli
     container_name: sonar-scanner
-    user: root
+    platform: linux/amd64
     env_file:
       - .env
-    platform: linux/amd64
-    environment:
-      - SONAR_HOST_URL=http://sonarqube:9000
-      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=app_test -Dsonar.projectName=EE-Working -Dsonar.projectVersion=1.0 -Dsonar.sources=. -Dsonar.login=sqp_dab536a782a0109c6b75633251468918fcf3313e -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true -Dsonar.java.binaries=target/classes
     volumes:
-      - ./app_test/spring-app:/usr/src:rw
-    networks:
-      - sonar-network
-    depends_on:
-      - sonarqube
-
+      - ${SONAR_SCAN_PATH}:/usr/src:rw
+    environment:
+      - SONAR_HOST_URL
+      - SONAR_SCANNER_OPTS=-Dsonar.projectKey=${SONAR_PROJECT_KEY} -Dsonar.projectName=${SONAR_PROJECT_NAME} -Dsonar.projectVersion=${SONAR_PROJECT_VERSION} -Dsonar.sources=. -Dsonar.login=${SONAR_LOGIN} -Dsonar.projectBaseDir=/usr/src -Dsonar.scm.disabled=true  -Dsonar.java.binaries=${SONAR_JAVA_BINARIES}
+    working_dir: /usr/src
 
 networks:
   sonar-network:

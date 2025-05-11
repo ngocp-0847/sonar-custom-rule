@@ -24,7 +24,7 @@ sudo apt install openjdk-17-jre
 ### Chạy SonarQube bằng Docker
 
 ```bash
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 ```
 
 Sau khi khởi động, truy cập SonarQube tại địa chỉ: http://localhost:9000  
@@ -35,7 +35,7 @@ Sau khi khởi động, truy cập SonarQube tại địa chỉ: http://localhos
 Sử dụng Docker Compose để chạy trình quét (Recommend):
 
 ```bash
-docker-compose up sonar-scanner
+docker compose up sonar-scanner
 ```
 
 Hoặc chạy local (nếu tải file bin về máy host):
@@ -51,6 +51,7 @@ Or run if have property file:
 ```
 
 # Cách tạo thêm custom rule.
+
 - Tạo một file Java mới trong thư mục `src/main/java/com/mycompany/rules` với tên `CustomRule.java`.
 - Trong file này, bạn sẽ định nghĩa các quy tắc tùy chỉnh của mình bằng cách mở rộng các lớp và giao diện có sẵn trong SonarQube API (Có hỗ trợ nhiều lớp ngôn ngữ như PHP và Java)
 - Ví dụ, bạn có thể tạo một quy tắc kiểm tra xem một biến có được khởi tạo hay không.
@@ -92,11 +93,8 @@ public class CustomRule extends IssuableSubscriptionVisitor {
 - Vào page sau để active rule http://localhost:9000/coding_rules?selected=css%3AS4655
 - Bạn cần cấu hình lại Quality Profile (extend Sonar default) và active thêm rule custom của mình.
 
-
 ## Kết Quả
 
 Sau khi phân tích hoàn tất, bạn có thể xem kết quả và các vấn đề phát hiện được trong giao diện web của SonarQube.
 
-
 ![SonarQube Analysis Result](./demo-sonarquebe.png)
-

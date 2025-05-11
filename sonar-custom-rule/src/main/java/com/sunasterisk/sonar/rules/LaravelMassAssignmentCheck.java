@@ -1,4 +1,4 @@
-package com.mycompany.sonar.rules;
+package com.sunasterisk.sonar.rules;
 
 import org.sonar.check.Rule;
 import org.sonar.check.Priority;
@@ -25,7 +25,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Rule(
-  key = "LaravelMassAssignment",
+  key = "LaravelMassAssignmentForCS1.1.1",
   name = "Detect unsafe mass assignment in Laravel",
   priority = Priority.CRITICAL,
   tags = {"security", "laravel", "mass-assignment"}

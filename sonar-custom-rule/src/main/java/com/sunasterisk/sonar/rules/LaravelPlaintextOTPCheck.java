@@ -1,4 +1,4 @@
-package com.mycompany.sonar.rules;
+package com.sunasterisk.sonar.rules;
 
 import org.sonar.check.Rule;
 import org.sonar.check.Priority;
@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.regex.Pattern;
 
 @Rule(
-  key = "LaravelPlaintextOTP",
+  key = "LaravelPlaintextOTPForCS2.2.2",
   name = "OTP values should never be stored in plaintext",
   priority = Priority.CRITICAL,
   tags = {"security", "laravel", "otp", "plaintext"}

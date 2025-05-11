@@ -1,4 +1,4 @@
-package com.mycompany.sonar.rules;
+package com.sunasterisk.sonar.rules;
 
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
