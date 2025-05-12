@@ -1,4 +1,4 @@
-package com.mycompany.sonar.rules;
+package com.sunasterisk.sonar.rules;
 
 import org.sonar.api.ExtensionPoint;
 import org.sonar.api.batch.ScannerSide;

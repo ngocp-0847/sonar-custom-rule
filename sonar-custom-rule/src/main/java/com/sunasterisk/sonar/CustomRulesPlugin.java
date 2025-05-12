@@ -1,10 +1,11 @@
-package com.mycompany.sonar;
+package com.sunasterisk.sonar;
 
 import org.sonar.api.Plugin;
-import com.mycompany.sonar.rules.CustomPhpRuleRepository;
-import com.mycompany.sonar.rules.LaravelCustomRulesDefinition;
-import com.mycompany.sonar.rules.JavaCustomRuleRepository;
-import com.mycompany.sonar.rules.SpringBootCustomRulesDefinition;
+
+import com.sunasterisk.sonar.rules.CustomPhpRuleRepository;
+import com.sunasterisk.sonar.rules.JavaCustomRuleRepository;
+import com.sunasterisk.sonar.rules.LaravelCustomRulesDefinition;
+import com.sunasterisk.sonar.rules.SpringBootCustomRulesDefinition;
 
 /**
  * Entry point of plugin

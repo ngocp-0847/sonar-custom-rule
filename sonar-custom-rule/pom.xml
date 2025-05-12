@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.mycompany.sonar</groupId>
+  <groupId>com.sunasterisk.sonar</groupId>
   <artifactId>sonar-custom-rules</artifactId>
   <version>1.0</version>
   <packaging>sonar-plugin</packaging>
@@ -66,7 +66,7 @@
         <version>1.23.0.740</version>
         <extensions>true</extensions>
         <configuration>
-          <pluginClass>com.mycompany.sonar.CustomRulesPlugin</pluginClass>
+          <pluginClass>com.sunasterisk.sonar.CustomRulesPlugin</pluginClass>
         </configuration>
       </plugin>
     </plugins>

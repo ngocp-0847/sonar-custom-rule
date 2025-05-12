@@ -1,4 +1,4 @@
-package com.mycompany.sonar.rules;
+package com.sunasterisk.sonar.rules;
 
 import org.sonar.api.rule.RuleStatus;
 import org.sonar.api.rule.Severity;
@@ -39,7 +39,7 @@ public class LaravelCustomRulesDefinition implements RulesDefinition {
      */
     private void setRuleDescriptions(NewRepository repository) {
         // Set description for LaravelMassAssignment rule
-        repository.rule("LaravelMassAssignment")
+        repository.rule("LaravelMassAssignmentForCS1.1.1")
             .setHtmlDescription(
                 "<p>This rule detects unsafe mass assignment vulnerabilities in Laravel applications.</p>" +
                 "<h2>Vulnerability</h2>" +
@@ -66,7 +66,7 @@ public class LaravelCustomRulesDefinition implements RulesDefinition {
             );
             
         // Set description for LaravelPlaintextOTP rule
-        repository.rule("LaravelPlaintextOTP")
+        repository.rule("LaravelPlaintextOTPForCS2.2.2")
             .setHtmlDescription(
                 "<p>This rule detects plaintext OTP (One-Time Password) storage in Laravel applications.</p>" +
                 "<h2>Vulnerability</h2>" +

@@ -6,7 +6,7 @@ set -e
 # Define variables
 PROJECT_DIR="sonar-custom-rule"
 JAR_FILE="sonar-custom-rules-1.0.jar"
-SONARQUBE_CONTAINER="65302458dc06"
+SONARQUBE_CONTAINER=sonarqube
 SONARQUBE_PLUGIN_PATH="/opt/sonarqube/extensions/plugins/"
 
 # Build the project
